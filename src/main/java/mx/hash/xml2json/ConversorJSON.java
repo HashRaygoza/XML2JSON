@@ -1,28 +1,34 @@
-package com.enercon.xml2json;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package mx.hash.xml2json;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 import org.json.JSONObject;
 import org.json.XML;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
-public class App {
-
-    static public void main(String[] args) {
-        try {
-            // Generador de constructor de objetos XML
+/**
+ *
+ * @author draygoza
+ */
+public class ConversorJSON {
+    public String convertir(String file) throws ParserConfigurationException, SAXException, IOException, TransformerException, TransformerConfigurationException {
+        // Generador de constructor de objetos XML
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 
             // Esto es para agilizar la lectura de archivos grandes
@@ -37,8 +43,7 @@ public class App {
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();            
 
             // Ruta del archivo XML
-            String nombreArchivo = "A-2.xml";
-            File archivo = new File(nombreArchivo);
+            File archivo = new File(file);
 
             // Objeto Documento XML
             Document documento = documentBuilder.parse(archivo);
@@ -55,11 +60,8 @@ public class App {
             
             JSONObject jsonObj = XML.toJSONObject(xmlString);
             String json = jsonObj.toString(4);
- 
-            System.out.println(json);
-
-        } catch (ParserConfigurationException | SAXException | IOException | TransformerException ex) {
-            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            
+            return json;
     }
+    
 }
